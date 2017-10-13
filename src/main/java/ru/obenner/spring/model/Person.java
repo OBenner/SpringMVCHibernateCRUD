@@ -3,20 +3,29 @@ package ru.obenner.spring.model;
 import javax.persistence.*;
 
 /**
- * Entity bean with JPA annotations
- * Hibernate provides JPA implementation
- *
+ * Simple JavaBean domain object representing an Person.
+ * Created by omyag on 10.10.2017.
  */
 @Entity
-@Table(name="Person")
+@Table(name = "person")
 public class Person {
     @Id
-    @Column(name="id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    /**
+     * Id of the person
+     * */
     private int id;
 
+    /**
+     * name of the person
+     */
     private String name;
 
+    /**
+     * country of the person
+     */
     private String country;
 
     public int getId() {
@@ -44,7 +53,7 @@ public class Person {
     }
 
     @Override
-    public String toString(){
-        return "id="+id+", name="+name+", country="+country;
+    public String toString() {
+        return "id=" + id + ", name=" + name + ", country=" + country;
     }
 }

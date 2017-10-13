@@ -12,17 +12,22 @@ import ru.obenner.spring.model.Person;
 import ru.obenner.spring.service.PersonService;
 
 /**
+ *
  * Created by omyag on 10.10.2017.
  */
 @Controller
 public class PersonController {
     private PersonService personService;
 
-    @Autowired(required=true)
-    @Qualifier(value="personService")
-    public void setPersonService(PersonService ps){
+    @Autowired(required = true)
+    @Qualifier(value = "personService")
+    public void setPersonService(PersonService ps) {
         this.personService = ps;
     }
+
+    /**
+     * Method that returns the list of person
+     */
 
     @RequestMapping(value = "/*", method = RequestMethod.GET)
     public String listPersons(Model model) {
@@ -31,14 +36,17 @@ public class PersonController {
         return "person";
     }
 
-    //For add and update person both
-    @RequestMapping(value= "/person/add", method = RequestMethod.POST)
-    public String addPerson(@ModelAttribute("person") Person p){
+    /**
+     * add  person
+     */
 
-        if(p.getId() == 0){
+    @RequestMapping(value = "/person/add", method = RequestMethod.POST)
+    public String addPerson(@ModelAttribute("person") Person p) {
+
+        if (p.getId() == 0) {
             //new person, add it
             this.personService.addPerson(p);
-        }else{
+        } else {
             //existing person, call update
             this.personService.updatePerson(p);
         }
@@ -47,15 +55,21 @@ public class PersonController {
 
     }
 
+    /**
+     * remove  person
+     */
     @RequestMapping("/remove/{id}")
-    public String removePerson(@PathVariable("id") int id){
+    public String removePerson(@PathVariable("id") int id) {
 
         this.personService.removePerson(id);
         return "redirect:/persons";
     }
 
+    /**
+     * update  person
+     */
     @RequestMapping("/edit/{id}")
-    public String editPerson(@PathVariable("id") int id, Model model){
+    public String editPerson(@PathVariable("id") int id, Model model) {
         model.addAttribute("person", this.personService.getPersonById(id));
         model.addAttribute("listPersons", this.personService.listPersons());
         return "person";
